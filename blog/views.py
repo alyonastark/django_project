@@ -20,6 +20,12 @@ class BlogCreateView(CreateView):
     fields = ('title', 'body', 'image')
     success_url = reverse_lazy('blog:blog_list')
 
+    def form_valid(self, form):
+        new_mat = form.save(commit=False)
+        new_mat.slug = slugify(new_mat.title)
+        new_mat.save()  # insert only here
+        return super().form_valid(form)
+
 
 class BlogDetailView(DetailView):
     model = Blog
@@ -37,11 +43,9 @@ class BlogUpdateView(UpdateView):
     success_url = reverse_lazy('blog:blog_list')
 
     def form_valid(self, form):
-        if form.is_valid():
-            new_mat = form.save()
-            new_mat.slug = slugify(new_mat.title)
-            new_mat.save()
-
+        new_mat = form.save(commit=False)
+        new_mat.slug = slugify(new_mat.title)
+        new_mat.save()  # insert only here
         return super().form_valid(form)
 
     def get_success_url(self):

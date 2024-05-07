@@ -23,7 +23,7 @@ class BlogCreateView(CreateView):
     def form_valid(self, form):
         new_mat = form.save(commit=False)
         new_mat.slug = slugify(new_mat.title)
-        new_mat.save()  # insert only here
+        new_mat.save()
         return super().form_valid(form)
 
 
@@ -45,7 +45,7 @@ class BlogUpdateView(UpdateView):
     def form_valid(self, form):
         new_mat = form.save(commit=False)
         new_mat.slug = slugify(new_mat.title)
-        new_mat.save()  # insert only here
+        new_mat.save()
         return super().form_valid(form)
 
     def get_success_url(self):

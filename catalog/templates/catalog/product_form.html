@@ -1,19 +1,23 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-<div class="col-12"></div>
+<form method="post">
+    <div class="col-12"></div>
     <div class="row">
         <div class="col-6">
             <div class="card">
+                <div class="card-header h3">
+                    Cоздание товара
+                </div>
                 <div class="card-body">
                     <form method="post">
                         {% csrf_token %}
                         {{ form.as_p}}
                         <button type="submit" class="btn btn-success">
                             {% if object %}
-                                Сохранить
+                            Сохранить
                             {% else %}
-                                Создать
+                            Создать
                             {% endif %}
                         </button>
                     </form>
@@ -21,5 +25,28 @@
             </div>
         </div>
     </div>
+    <div class="col-12"></div>
+    <div class="row">
+       <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                       Создание версии
+                    </h2>
+                </div>
+                <div class="card-body">
+                    {{ formset.management_form }}
+                    {% for form in formset.forms %}
+                    {{ form.as_p }}
+                    {% if not forloop.last %}
+                    <hr>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+    </form>
 </div>
 {% endblock %}
